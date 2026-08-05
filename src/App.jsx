@@ -24,7 +24,19 @@ import {
   FaReact,
 } from 'react-icons/fa'
 import { MdBrush, MdGroups, MdMovieCreation } from 'react-icons/md'
-import { SiGooglecloud, SiMysql, SiNestjs, SiPostgresql } from 'react-icons/si'
+import {
+  SiArduino,
+  SiExpress,
+  SiFastapi,
+  SiFlask,
+  SiGooglecloud,
+  SiJsonwebtokens,
+  SiMysql,
+  SiNestjs,
+  SiOllama,
+  SiPostgresql,
+  SiScikitlearn,
+} from 'react-icons/si'
 import './App.css'
 
 const sections = [
@@ -35,6 +47,21 @@ const sections = [
   { id: 'enfoque', label: 'Enfoque' },
   { id: 'contacto', label: 'Contacto' },
 ]
+
+const stackIcons = {
+  React: FaReact,
+  FastAPI: SiFastapi,
+  XGBoost: SiScikitlearn,
+  PostgreSQL: SiPostgresql,
+  Arduino: SiArduino,
+  Flask: SiFlask,
+  Prolog: Code2,
+  'API REST': Server,
+  'Node.js': FaNodeJs,
+  Express: SiExpress,
+  JWT: SiJsonwebtokens,
+  Ollama: SiOllama,
+}
 
 function App() {
   const [activeSection, setActiveSection] = useState('inicio')
@@ -362,14 +389,16 @@ function App() {
                 <h3 className="mt-5 text-2xl font-bold">{project.title}</h3>
                 <p className="mt-4 leading-7 text-slate-300">{project.description}</p>
                 <div className="mt-6 flex flex-wrap gap-2">
-                  {project.stack.map((item) => (
-                    <span
-                      className="rounded-md border border-white/10 px-3 py-1 text-sm text-slate-300"
-                      key={item}
-                    >
-                      {item}
-                    </span>
-                  ))}
+                  {project.stack.map((item) => {
+                    const StackIcon = stackIcons[item] ?? Code2
+
+                    return (
+                      <span className="project-stack-pill" key={item}>
+                        <StackIcon className="project-stack-icon" size={16} />
+                        {item}
+                      </span>
+                    )
+                  })}
                 </div>
                 {project.repo ? (
                   <a className="project-link" href={project.repo} target="_blank" rel="noreferrer">
