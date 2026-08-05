@@ -578,19 +578,8 @@ function ProjectPreview({ type }) {
 
 function ProjectCarousel({ images, title }) {
   const [activeIndex, setActiveIndex] = useState(0)
-  const [isPaused, setIsPaused] = useState(false)
   const [isLightboxOpen, setIsLightboxOpen] = useState(false)
   const activeImage = images[activeIndex]
-
-  useEffect(() => {
-    if (isPaused || isLightboxOpen || images.length < 2) return undefined
-
-    const intervalId = window.setInterval(() => {
-      setActiveIndex((index) => (index === images.length - 1 ? 0 : index + 1))
-    }, 4200)
-
-    return () => window.clearInterval(intervalId)
-  }, [images.length, isLightboxOpen, isPaused])
 
   const goToPrevious = () => {
     setActiveIndex((index) => (index === 0 ? images.length - 1 : index - 1))
@@ -601,11 +590,7 @@ function ProjectCarousel({ images, title }) {
   }
 
   return (
-    <div
-      className="project-carousel"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
-    >
+    <div className="project-carousel">
       <button
         className="project-carousel-frame"
         type="button"
