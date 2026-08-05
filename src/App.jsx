@@ -67,6 +67,7 @@ function App() {
   }, [])
 
   const profile = {
+    siteName: 'joshipanda',
     name: 'Edgar Josías Cán Ajquejay',
     role: 'Desarrollador web',
     email: 'josiascan2002@gmail.com',
@@ -189,7 +190,7 @@ function App() {
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#00d1b2] text-[#071118]">
               <Code2 size={20} />
             </span>
-            <span className="truncate">{profile.name}</span>
+            <span className="truncate">{profile.siteName}</span>
           </a>
           <div className="hidden items-center gap-1 text-sm text-slate-300 md:flex">
             {sections.map((section) => (
@@ -216,7 +217,7 @@ function App() {
         <div className="reveal">
           <p className="mb-5 inline-flex items-center gap-2 rounded-md border border-[#00d1b2]/30 bg-[#00d1b2]/10 px-3 py-2 text-sm font-medium text-[#75f6e0]">
             <Sparkles size={16} />
-            Portfolio técnico-creativo
+            {profile.siteName}
           </p>
           <h1 className="max-w-3xl text-5xl font-black leading-[1.02] tracking-normal sm:text-6xl">
             {profile.name}
