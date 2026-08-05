@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import {
   ArrowUpRight,
+  ChevronLeft,
+  ChevronRight,
   Code2,
   Layers3,
   Mail,
@@ -129,6 +131,14 @@ function App() {
       stack: ['React', 'FastAPI', 'XGBoost', 'PostgreSQL', 'Arduino'],
       repo: 'https://github.com/joshi20022021/PROYECTO_AGROCLIMA_TESIS',
       preview: 'frontend',
+      images: [
+        '/images/projects/PROYECTO1.1.png',
+        '/images/projects/PROYECTO1.2.png',
+        '/images/projects/PROYECTO1.3.png',
+        '/images/projects/PROYECTO1.4.png',
+        '/images/projects/PROYECTO1.5.png',
+        '/images/projects/PROYECTO1.6.png',
+      ],
     },
     {
       title: 'MediLogic',
@@ -145,8 +155,15 @@ function App() {
       description:
         'Tienda en línea con catálogo, carrito, favoritos, autenticación, panel administrativo y asistente inteligente de recomendaciones.',
       stack: ['React', 'Node.js', 'Express', 'JWT', 'Ollama'],
-      repo: null,
+      repo: 'https://github.com/joshi20022021/TIENDA_INTELIGENTE',
       preview: 'fullstack',
+      images: [
+        '/images/projects/PROYECTO3.1.png',
+        '/images/projects/PROYECTO3.2.png',
+        '/images/projects/PROYECTO3.3.png',
+        '/images/projects/PROYECTO3.4.png',
+        '/images/projects/PROYECTO3.5.png',
+      ],
     },
   ]
 
@@ -377,7 +394,11 @@ function App() {
           <div className="mt-8 grid gap-5 lg:grid-cols-3">
             {projectSlots.map((project) => (
               <article className="project-card" key={project.title}>
-                <ProjectPreview type={project.preview} />
+                {project.images ? (
+                  <ProjectCarousel images={project.images} title={project.title} />
+                ) : (
+                  <ProjectPreview type={project.preview} />
+                )}
                 <div className="mt-5 flex items-center justify-between">
                   <span className="rounded-md bg-[#00d1b2]/10 px-3 py-1 text-sm font-semibold text-[#75f6e0]">
                     {project.type}
@@ -545,6 +566,61 @@ function ProjectPreview({ type }) {
           </div>
         </div>
       </div>
+    </div>
+  )
+}
+
+function ProjectCarousel({ images, title }) {
+  const [activeIndex, setActiveIndex] = useState(0)
+  const activeImage = images[activeIndex]
+
+  const goToPrevious = () => {
+    setActiveIndex((index) => (index === 0 ? images.length - 1 : index - 1))
+  }
+
+  const goToNext = () => {
+    setActiveIndex((index) => (index === images.length - 1 ? 0 : index + 1))
+  }
+
+  return (
+    <div className="project-carousel">
+      <img
+        className="project-carousel-image"
+        src={activeImage}
+        alt={`${title} captura ${activeIndex + 1}`}
+        loading="lazy"
+      />
+      {images.length > 1 ? (
+        <>
+          <button
+            className="carousel-button carousel-button-left"
+            type="button"
+            aria-label={`Ver captura anterior de ${title}`}
+            onClick={goToPrevious}
+          >
+            <ChevronLeft size={18} />
+          </button>
+          <button
+            className="carousel-button carousel-button-right"
+            type="button"
+            aria-label={`Ver siguiente captura de ${title}`}
+            onClick={goToNext}
+          >
+            <ChevronRight size={18} />
+          </button>
+          <div className="carousel-dots" aria-label={`Capturas de ${title}`}>
+            {images.map((image, index) => (
+              <button
+                className={activeIndex === index ? 'carousel-dot is-active' : 'carousel-dot'}
+                type="button"
+                aria-label={`Ver captura ${index + 1} de ${title}`}
+                onClick={() => setActiveIndex(index)}
+                key={image}
+              />
+            ))}
+          </div>
+        </>
+      ) : null}
     </div>
   )
 }
