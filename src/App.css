@@ -16,6 +16,20 @@ a {
   color: #75f6e0;
 }
 
+.mobile-menu {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: grid;
+  gap: 4px;
+  margin: 0 auto;
+  max-width: 72rem;
+  padding: 10px 20px 16px;
+}
+
+.mobile-menu .nav-link {
+  display: block;
+  padding: 12px;
+}
+
 .icon-button,
 .primary-button,
 .secondary-button {
@@ -100,6 +114,7 @@ a {
 }
 
 .project-card,
+.education-card,
 .service-card {
   background: #10182b;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -108,12 +123,17 @@ a {
   padding: 24px;
 }
 
+.education-card {
+  max-width: 720px;
+}
+
 .project-card {
   display: flex;
   flex-direction: column;
 }
 
 .project-card:hover,
+.education-card:hover,
 .service-card:hover {
   border-color: rgba(117, 246, 224, 0.35);
 }

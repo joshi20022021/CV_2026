@@ -9,6 +9,7 @@ import {
   Phone,
   Server,
   Sparkles,
+  X,
 } from 'lucide-react'
 import {
   FaAws,
@@ -26,10 +27,18 @@ import { MdBrush, MdGroups, MdMovieCreation } from 'react-icons/md'
 import { SiGooglecloud, SiMysql, SiNestjs, SiPostgresql } from 'react-icons/si'
 import './App.css'
 
-const sections = ['inicio', 'proyectos', 'habilidades', 'enfoque', 'contacto']
+const sections = [
+  { id: 'inicio', label: 'Inicio' },
+  { id: 'formacion', label: 'Formación' },
+  { id: 'proyectos', label: 'Proyectos' },
+  { id: 'habilidades', label: 'Habilidades' },
+  { id: 'enfoque', label: 'Enfoque' },
+  { id: 'contacto', label: 'Contacto' },
+]
 
 function App() {
   const [activeSection, setActiveSection] = useState('inicio')
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   useEffect(() => {
     const revealItems = document.querySelectorAll('.reveal')
@@ -76,6 +85,12 @@ function App() {
     linkedin: 'https://www.linkedin.com/in/edgar-josías-cán-ajquejay-07143a245',
     summary:
       'Desarrollo interfaces web y servicios backend combinando React, Node.js, Python, bases de datos y herramientas cloud. Actualmente estoy aprendiendo NestJS para fortalecer mi arquitectura backend.',
+  }
+
+  const education = {
+    status: 'Estudiante con cierre de pensum',
+    degree: 'Ingeniería en Ciencias y Sistemas',
+    university: 'Universidad de San Carlos de Guatemala',
   }
 
   const projectSlots = [
@@ -177,16 +192,18 @@ function App() {
     },
     {
       icon: Layers3,
-      title: 'Perfil técnico-creativo',
+      title: 'Perfil técnico y visual',
       text: 'Desarrollo web acompañado de criterio visual para contenido, documentación y presentación.',
     },
   ]
+
+  const closeMenu = () => setIsMenuOpen(false)
 
   return (
     <main className="min-h-screen bg-[#0b1020] text-white">
       <header className="sticky top-0 z-20 border-b border-white/10 bg-[#0b1020]/88 backdrop-blur">
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
-          <a className="flex min-w-0 items-center gap-2 font-semibold" href="#inicio">
+          <a className="flex min-w-0 items-center gap-2 font-semibold" href="#inicio" onClick={closeMenu}>
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#00d1b2] text-[#071118]">
               <Code2 size={20} />
             </span>
@@ -194,19 +211,31 @@ function App() {
           </a>
           <div className="hidden items-center gap-1 text-sm text-slate-300 md:flex">
             {sections.map((section) => (
-              <a
-                className={activeSection === section ? 'nav-link is-active' : 'nav-link'}
-                href={`#${section}`}
-                key={section}
-              >
-                {section}
-              </a>
+              <NavLink activeSection={activeSection} section={section} key={section.id} />
             ))}
           </div>
-          <button className="icon-button md:hidden" type="button" aria-label="Abrir menú">
-            <Menu size={21} />
+          <button
+            aria-expanded={isMenuOpen}
+            className="icon-button md:hidden"
+            type="button"
+            aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+            onClick={() => setIsMenuOpen((open) => !open)}
+          >
+            {isMenuOpen ? <X size={21} /> : <Menu size={21} />}
           </button>
         </nav>
+        {isMenuOpen ? (
+          <div className="mobile-menu md:hidden">
+            {sections.map((section) => (
+              <NavLink
+                activeSection={activeSection}
+                section={section}
+                key={section.id}
+                onClick={closeMenu}
+              />
+            ))}
+          </div>
+        ) : null}
       </header>
 
       <section
@@ -275,6 +304,19 @@ function App() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section id="formacion" data-section className="mx-auto max-w-6xl px-5 pb-16">
+        <div className="reveal">
+          <SectionTitle kicker="Formación académica" title="Educación" />
+          <article className="education-card mt-8">
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#75f6e0]">
+              {education.status}
+            </p>
+            <h3 className="mt-3 text-2xl font-bold">{education.degree}</h3>
+            <p className="mt-3 leading-7 text-slate-300">{education.university}</p>
+          </article>
         </div>
       </section>
 
@@ -387,6 +429,18 @@ function App() {
         </div>
       </footer>
     </main>
+  )
+}
+
+function NavLink({ activeSection, section, onClick }) {
+  return (
+    <a
+      className={activeSection === section.id ? 'nav-link is-active' : 'nav-link'}
+      href={`#${section.id}`}
+      onClick={onClick}
+    >
+      {section.label}
+    </a>
   )
 }
 
