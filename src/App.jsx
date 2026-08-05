@@ -95,27 +95,30 @@ function App() {
 
   const projectSlots = [
     {
-      title: 'Proyecto documentado en GitHub',
-      type: 'Próximamente',
+      title: 'AgroClima GT',
+      type: 'Tesis / Machine Learning',
       description:
-        'Espacio reservado para un proyecto que documentaré, corregiré y conectaré con su repositorio.',
-      stack: ['React', 'Node.js', 'GitHub'],
+        'Plataforma web que predice el rendimiento de cultivos con machine learning y genera consejos según anomalías en métricas agrícolas.',
+      stack: ['React', 'FastAPI', 'XGBoost', 'PostgreSQL', 'Arduino'],
+      repo: 'https://github.com/joshi20022021/PROYECTO_AGROCLIMA_TESIS',
       preview: 'frontend',
     },
     {
-      title: 'API o servicio backend',
-      type: 'Próximamente',
+      title: 'MediLogic',
+      type: 'Sistema experto',
       description:
-        'Aquí irá una API, servicio o integración backend con detalles técnicos y vista previa.',
-      stack: ['Node.js', 'NestJS', 'PostgreSQL'],
+        'Sistema de diagnóstico clínico con frontend en React, API REST en Flask y motor lógico en Prolog para inferencia médica.',
+      stack: ['React', 'Flask', 'Prolog', 'API REST'],
+      repo: 'https://github.com/joshi20022021/IA1_1S2026_202112012',
       preview: 'backend',
     },
     {
-      title: 'Proyecto full stack',
-      type: 'Próximamente',
+      title: 'Tienda Inteligente',
+      type: 'Full stack / Recomendaciones',
       description:
-        'Tarjeta preparada para mostrar imagen, explicación, stack, estado y enlace al repositorio.',
-      stack: ['React', 'Docker', 'Cloud'],
+        'Tienda en línea con catálogo, carrito, favoritos, autenticación, panel administrativo y asistente inteligente de recomendaciones.',
+      stack: ['React', 'Node.js', 'Express', 'JWT', 'Ollama'],
+      repo: null,
       preview: 'fullstack',
     },
   ]
@@ -328,8 +331,8 @@ function App() {
         <div className="mx-auto max-w-6xl reveal">
           <SectionTitle
             kicker="Repositorio y documentación"
-            title="Proyectos en preparación"
-            text="Este apartado está listo para conectar proyectos documentados en GitHub, mostrar capturas dentro de la web y actualizar cada tarjeta cuando corrijas errores o publiques avances."
+            title="Proyectos realizados"
+            text="Estos proyectos tienen documentación técnica y espacio preparado para agregar capturas o previsualizaciones reales dentro del portfolio."
           />
           <div className="mt-8 grid gap-5 lg:grid-cols-3">
             {projectSlots.map((project) => (
@@ -339,7 +342,9 @@ function App() {
                   <span className="rounded-md bg-[#00d1b2]/10 px-3 py-1 text-sm font-semibold text-[#75f6e0]">
                     {project.type}
                   </span>
-                  <span className="text-sm text-slate-400">GitHub pendiente</span>
+                  <span className="text-sm text-slate-400">
+                    {project.repo ? 'Repositorio' : 'Repo pendiente'}
+                  </span>
                 </div>
                 <h3 className="mt-5 text-2xl font-bold">{project.title}</h3>
                 <p className="mt-4 leading-7 text-slate-300">{project.description}</p>
@@ -353,6 +358,17 @@ function App() {
                     </span>
                   ))}
                 </div>
+                {project.repo ? (
+                  <a className="project-link" href={project.repo} target="_blank" rel="noreferrer">
+                    <FaGithub size={18} />
+                    Ver repositorio
+                  </a>
+                ) : (
+                  <span className="project-link is-disabled">
+                    <FaGithub size={18} />
+                    Repositorio pendiente
+                  </span>
+                )}
               </article>
             ))}
           </div>

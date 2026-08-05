@@ -132,6 +132,33 @@ a {
   flex-direction: column;
 }
 
+.project-link {
+  align-items: center;
+  align-self: flex-start;
+  border: 1px solid rgba(117, 246, 224, 0.28);
+  border-radius: 6px;
+  color: #75f6e0;
+  display: inline-flex;
+  font-weight: 800;
+  gap: 9px;
+  margin-top: auto;
+  padding: 10px 13px;
+}
+
+.project-link:hover {
+  background: rgba(0, 209, 178, 0.1);
+}
+
+.project-link.is-disabled {
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #94a3b8;
+  cursor: not-allowed;
+}
+
+.project-link.is-disabled:hover {
+  background: transparent;
+}
+
 .project-card:hover,
 .education-card:hover,
 .service-card:hover {
