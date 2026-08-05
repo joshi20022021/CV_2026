@@ -393,9 +393,9 @@ function App() {
       >
         <div className="mx-auto max-w-6xl reveal">
           <SectionTitle
-            kicker="Repositorio y documentación"
+            kicker="Proyectos destacados"
             title="Proyectos realizados"
-            text="Estos proyectos tienen documentación técnica y espacio preparado para agregar capturas o previsualizaciones reales dentro del portfolio."
+            text="Aplicaciones web y sistemas desarrollados con enfoque en resolución de problemas, arquitectura técnica y experiencia de usuario."
           />
           <div className="mt-8 grid gap-5 lg:grid-cols-3">
             {projectSlots.map((project) => (
