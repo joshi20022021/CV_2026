@@ -201,20 +201,33 @@ function App() {
   ]
 
   const closeMenu = () => setIsMenuOpen(false)
+  const scrollToSection = (sectionId) => {
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    closeMenu()
+  }
 
   return (
     <main className="min-h-screen bg-[#0b1020] text-white">
       <header className="sticky top-0 z-20 border-b border-white/10 bg-[#0b1020]/88 backdrop-blur">
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
-          <a className="flex min-w-0 items-center gap-2 font-semibold" href="#inicio" onClick={closeMenu}>
+          <button
+            className="brand-button"
+            type="button"
+            onClick={() => scrollToSection('inicio')}
+          >
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#00d1b2] text-[#071118]">
               <Code2 size={20} />
             </span>
             <span className="truncate">{profile.siteName}</span>
-          </a>
+          </button>
           <div className="hidden items-center gap-1 text-sm text-slate-300 md:flex">
             {sections.map((section) => (
-              <NavLink activeSection={activeSection} section={section} key={section.id} />
+              <NavLink
+                activeSection={activeSection}
+                section={section}
+                key={section.id}
+                onClick={() => scrollToSection(section.id)}
+              />
             ))}
           </div>
           <button
@@ -234,7 +247,7 @@ function App() {
                 activeSection={activeSection}
                 section={section}
                 key={section.id}
-                onClick={closeMenu}
+                onClick={() => scrollToSection(section.id)}
               />
             ))}
           </div>
@@ -259,14 +272,14 @@ function App() {
             {profile.summary}
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <a className="primary-button" href="#proyectos">
+            <button className="primary-button" type="button" onClick={() => scrollToSection('proyectos')}>
               Ver proyectos
               <ArrowUpRight size={18} />
-            </a>
-            <a className="secondary-button" href="#contacto">
+            </button>
+            <button className="secondary-button" type="button" onClick={() => scrollToSection('contacto')}>
               Contáctame
               <Mail size={18} />
-            </a>
+            </button>
           </div>
         </div>
 
@@ -450,13 +463,13 @@ function App() {
 
 function NavLink({ activeSection, section, onClick }) {
   return (
-    <a
+    <button
       className={activeSection === section.id ? 'nav-link is-active' : 'nav-link'}
-      href={`#${section.id}`}
       onClick={onClick}
+      type="button"
     >
       {section.label}
-    </a>
+    </button>
   )
 }
 

@@ -3,6 +3,30 @@ a {
   text-decoration: none;
 }
 
+.brand-button,
+.nav-link,
+.primary-button,
+.secondary-button {
+  font: inherit;
+}
+
+.brand-button,
+.nav-link {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.brand-button {
+  align-items: center;
+  color: inherit;
+  display: flex;
+  font-weight: 700;
+  gap: 8px;
+  min-width: 0;
+  padding: 0;
+}
+
 .nav-link {
   border-radius: 6px;
   color: #cbd5e1;
