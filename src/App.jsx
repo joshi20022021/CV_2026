@@ -148,6 +148,12 @@ function App() {
       stack: ['React', 'Flask', 'Prolog', 'API REST'],
       repo: 'https://github.com/joshi20022021/IA1_1S2026_202112012',
       preview: 'backend',
+      images: [
+        '/images/projects/PROYECTO2.1.png',
+        '/images/projects/PROYECTO2.2.png',
+        '/images/projects/PROYECTO2.3.png',
+        '/images/projects/PROYECTO2.4.png',
+      ],
     },
     {
       title: 'Tienda Inteligente',
@@ -572,7 +578,19 @@ function ProjectPreview({ type }) {
 
 function ProjectCarousel({ images, title }) {
   const [activeIndex, setActiveIndex] = useState(0)
+  const [isPaused, setIsPaused] = useState(false)
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false)
   const activeImage = images[activeIndex]
+
+  useEffect(() => {
+    if (isPaused || isLightboxOpen || images.length < 2) return undefined
+
+    const intervalId = window.setInterval(() => {
+      setActiveIndex((index) => (index === images.length - 1 ? 0 : index + 1))
+    }, 4200)
+
+    return () => window.clearInterval(intervalId)
+  }, [images.length, isLightboxOpen, isPaused])
 
   const goToPrevious = () => {
     setActiveIndex((index) => (index === 0 ? images.length - 1 : index - 1))
@@ -583,13 +601,24 @@ function ProjectCarousel({ images, title }) {
   }
 
   return (
-    <div className="project-carousel">
-      <img
-        className="project-carousel-image"
-        src={activeImage}
-        alt={`${title} captura ${activeIndex + 1}`}
-        loading="lazy"
-      />
+    <div
+      className="project-carousel"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
+      <button
+        className="project-carousel-frame"
+        type="button"
+        aria-label={`Ampliar captura ${activeIndex + 1} de ${title}`}
+        onClick={() => setIsLightboxOpen(true)}
+      >
+        <img
+          className="project-carousel-image"
+          src={activeImage}
+          alt={`${title} captura ${activeIndex + 1}`}
+          loading="lazy"
+        />
+      </button>
       {images.length > 1 ? (
         <>
           <button
@@ -621,6 +650,87 @@ function ProjectCarousel({ images, title }) {
           </div>
         </>
       ) : null}
+      <button
+        className="carousel-expand"
+        type="button"
+        onClick={() => setIsLightboxOpen(true)}
+      >
+        Ampliar
+      </button>
+      {isLightboxOpen ? (
+        <ProjectLightbox
+          activeIndex={activeIndex}
+          images={images}
+          onClose={() => setIsLightboxOpen(false)}
+          onNext={goToNext}
+          onPrevious={goToPrevious}
+          setActiveIndex={setActiveIndex}
+          title={title}
+        />
+      ) : null}
+    </div>
+  )
+}
+
+function ProjectLightbox({
+  activeIndex,
+  images,
+  onClose,
+  onNext,
+  onPrevious,
+  setActiveIndex,
+  title,
+}) {
+  const activeImage = images[activeIndex]
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') onClose()
+      if (event.key === 'ArrowLeft') onPrevious()
+      if (event.key === 'ArrowRight') onNext()
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [onClose, onNext, onPrevious])
+
+  return (
+    <div className="lightbox" role="dialog" aria-modal="true" aria-label={`Galería de ${title}`}>
+      <button className="lightbox-backdrop" type="button" aria-label="Cerrar galería" onClick={onClose} />
+      <div className="lightbox-panel">
+        <div className="lightbox-topbar">
+          <div>
+            <p>{title}</p>
+            <span>
+              Captura {activeIndex + 1} de {images.length}
+            </span>
+          </div>
+          <button className="lightbox-close" type="button" onClick={onClose}>
+            <X size={20} />
+          </button>
+        </div>
+        <div className="lightbox-stage">
+          <button className="lightbox-arrow lightbox-arrow-left" type="button" onClick={onPrevious}>
+            <ChevronLeft size={24} />
+          </button>
+          <img src={activeImage} alt={`${title} captura ampliada ${activeIndex + 1}`} />
+          <button className="lightbox-arrow lightbox-arrow-right" type="button" onClick={onNext}>
+            <ChevronRight size={24} />
+          </button>
+        </div>
+        <div className="lightbox-thumbs">
+          {images.map((image, index) => (
+            <button
+              className={activeIndex === index ? 'lightbox-thumb is-active' : 'lightbox-thumb'}
+              type="button"
+              onClick={() => setActiveIndex(index)}
+              key={image}
+            >
+              <img src={image} alt={`${title} miniatura ${index + 1}`} />
+            </button>
+          ))}
+        </div>
+      </div>
     </div>
   )
 }
