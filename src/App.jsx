@@ -669,6 +669,9 @@ function ProjectLightbox({
   const activeImage = images[activeIndex]
 
   useEffect(() => {
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') onClose()
       if (event.key === 'ArrowLeft') onPrevious()
@@ -676,7 +679,10 @@ function ProjectLightbox({
     }
 
     window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
+    return () => {
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', handleKeyDown)
+    }
   }, [onClose, onNext, onPrevious])
 
   return (
