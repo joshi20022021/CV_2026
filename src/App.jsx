@@ -667,6 +667,7 @@ function ProjectLightbox({
   title,
 }) {
   const activeImage = images[activeIndex]
+  const [zoom, setZoom] = useState(1)
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow
@@ -684,6 +685,18 @@ function ProjectLightbox({
       window.removeEventListener('keydown', handleKeyDown)
     }
   }, [onClose, onNext, onPrevious])
+
+  useEffect(() => {
+    setZoom(1)
+  }, [activeImage])
+
+  const zoomOut = () => {
+    setZoom((value) => Math.max(1, Number((value - 0.25).toFixed(2))))
+  }
+
+  const zoomIn = () => {
+    setZoom((value) => Math.min(2.5, Number((value + 0.25).toFixed(2))))
+  }
 
   return (
     <div className="lightbox" role="dialog" aria-modal="true" aria-label={`Galería de ${title}`}>
@@ -704,10 +717,27 @@ function ProjectLightbox({
           <button className="lightbox-arrow lightbox-arrow-left" type="button" onClick={onPrevious}>
             <ChevronLeft size={24} />
           </button>
-          <img src={activeImage} alt={`${title} captura ampliada ${activeIndex + 1}`} />
+          <div className="lightbox-image-scroll">
+            <img
+              src={activeImage}
+              alt={`${title} captura ampliada ${activeIndex + 1}`}
+              style={{ height: `${zoom * 100}%`, width: `${zoom * 100}%` }}
+            />
+          </div>
           <button className="lightbox-arrow lightbox-arrow-right" type="button" onClick={onNext}>
             <ChevronRight size={24} />
           </button>
+          <div className="lightbox-zoom-controls">
+            <button type="button" onClick={zoomOut} disabled={zoom === 1}>
+              -
+            </button>
+            <button type="button" onClick={() => setZoom(1)}>
+              {Math.round(zoom * 100)}%
+            </button>
+            <button type="button" onClick={zoomIn} disabled={zoom === 2.5}>
+              +
+            </button>
+          </div>
         </div>
         <div className="lightbox-thumbs">
           {images.map((image, index) => (
