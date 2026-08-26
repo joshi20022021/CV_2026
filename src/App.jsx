@@ -34,11 +34,15 @@ import {
   SiGooglecloud,
   SiJsonwebtokens,
   SiMysql,
+  SiN8N,
   SiNestjs,
   SiOllama,
   SiPostgresql,
+  SiClaude,
+  SiChatbot,
   SiScikitlearn,
 } from 'react-icons/si'
+import { TbAutomation, TbRobot } from 'react-icons/tb'
 import './App.css'
 
 const sections = [
@@ -113,7 +117,7 @@ function App() {
     github: 'https://github.com/joshi20022021',
     linkedin: 'https://www.linkedin.com/in/edgar-josías-cán-ajquejay-07143a245',
     summary:
-      'Desarrollo interfaces web y servicios backend combinando React, Node.js, Python, bases de datos y herramientas cloud. Actualmente estoy aprendiendo NestJS para fortalecer mi arquitectura backend.',
+      'Desarrollo interfaces web y servicios backend combinando React, Node.js, Python, bases de datos y herramientas cloud. También tengo conocimiento en tecnologías de IA, agentes y automatización usando ChatGPT, Claude, n8n y orquestación de flujos.',
   }
 
   const education = {
@@ -210,6 +214,17 @@ function App() {
         { name: 'Docker', icon: FaDocker },
         { name: 'GitHub', icon: FaGithub },
         { name: 'GitLab', icon: FaGitlab },
+      ],
+    },
+    {
+      title: 'IA, agentes y automatización',
+      text: 'Uso de herramientas de IA para apoyar desarrollo, automatización y orquestación de procesos.',
+      items: [
+        { name: 'ChatGPT', icon: SiChatbot },
+        { name: 'Claude', icon: SiClaude },
+        { name: 'n8n', icon: SiN8N },
+        { name: 'Agentes de IA', icon: TbRobot },
+        { name: 'Orquestación', icon: TbAutomation },
       ],
     },
     {
