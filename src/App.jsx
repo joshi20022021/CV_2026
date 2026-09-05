@@ -132,6 +132,10 @@ function App() {
       type: 'Tesis / Machine Learning',
       description:
         'Plataforma web que predice el rendimiento de cultivos con machine learning y genera consejos según anomalías en métricas agrícolas.',
+      challenge:
+        'Integrar datos agrícolas, sensores y un modelo de machine learning en una plataforma usable para analizar rendimiento de cultivos en Guatemala.',
+      impact:
+        'Centraliza métricas, predicciones y recomendaciones para apoyar decisiones agrícolas con información más clara y accionable.',
       stack: ['React', 'FastAPI', 'XGBoost', 'PostgreSQL', 'Arduino'],
       repo: 'https://github.com/joshi20022021/PROYECTO_AGROCLIMA_TESIS',
       preview: 'frontend',
@@ -149,6 +153,10 @@ function App() {
       type: 'Sistema experto',
       description:
         'Sistema de diagnóstico clínico con frontend en React, API REST en Flask y motor lógico en Prolog para inferencia médica.',
+      challenge:
+        'Conectar una interfaz clínica con una API Flask y un motor lógico en Prolog, manteniendo las reglas separadas del frontend.',
+      impact:
+        'Permite explorar diagnósticos por afinidad y validar tratamientos considerando alergias y condiciones del paciente.',
       stack: ['React', 'Flask', 'Prolog', 'API REST'],
       repo: 'https://github.com/joshi20022021/IA1_1S2026_202112012',
       preview: 'backend',
@@ -164,6 +172,10 @@ function App() {
       type: 'Full stack / Recomendaciones',
       description:
         'Tienda en línea con catálogo, carrito, favoritos, autenticación, panel administrativo y asistente inteligente de recomendaciones.',
+      challenge:
+        'Diseñar un ecommerce full stack con autenticación, panel administrativo y un asistente capaz de recomendar productos por intención, búsqueda y presupuesto.',
+      impact:
+        'Mejora la experiencia de compra al orientar al usuario con recomendaciones, carrito, favoritos y flujos administrativos organizados.',
       stack: ['React', 'Node.js', 'Express', 'JWT', 'Ollama'],
       repo: 'https://github.com/joshi20022021/TIENDA_INTELIGENTE',
       preview: 'fullstack',
@@ -430,6 +442,16 @@ function App() {
                 </div>
                 <h3 className="mt-5 text-2xl font-bold">{project.title}</h3>
                 <p className="mt-4 leading-7 text-slate-300">{project.description}</p>
+                <div className="project-insights">
+                  <div className="project-insight">
+                    <span>Desafío</span>
+                    <p>{project.challenge}</p>
+                  </div>
+                  <div className="project-insight">
+                    <span>Impacto real</span>
+                    <p>{project.impact}</p>
+                  </div>
+                </div>
                 <div className="mt-6 flex flex-wrap gap-2">
                   {project.stack.map((item) => {
                     const StackIcon = stackIcons[item] ?? Code2
