@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import {
   ArrowUpRight,
   ChevronLeft,
@@ -740,7 +741,7 @@ function ProjectLightbox({
     setZoom((value) => Math.min(2.5, Number((value + 0.25).toFixed(2))))
   }
 
-  return (
+  return createPortal(
     <div className="lightbox" role="dialog" aria-modal="true" aria-label={`Galería de ${title}`}>
       <button className="lightbox-backdrop" type="button" aria-label="Cerrar galería" onClick={onClose} />
       <div className="lightbox-panel">
@@ -796,7 +797,8 @@ function ProjectLightbox({
           ))}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }
 
