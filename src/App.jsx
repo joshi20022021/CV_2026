@@ -77,6 +77,10 @@ function App() {
     const revealItems = document.querySelectorAll('.reveal')
     const sectionItems = document.querySelectorAll('[data-section]')
 
+    revealItems.forEach((item, index) => {
+      item.style.setProperty('--reveal-delay', `${Math.min(index % 4, 3) * 70}ms`)
+    })
+
     const revealObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -636,6 +640,7 @@ function ProjectCarousel({ images, title }) {
       >
         <img
           className="project-carousel-image"
+          key={activeImage}
           src={activeImage}
           alt={`${title} captura ${activeIndex + 1}`}
           loading="lazy"
@@ -756,6 +761,8 @@ function ProjectLightbox({
           </button>
           <div className="lightbox-image-scroll">
             <img
+              className="lightbox-image"
+              key={activeImage}
               src={activeImage}
               alt={`${title} captura ampliada ${activeIndex + 1}`}
               style={{ height: `${zoom * 100}%`, width: `${zoom * 100}%` }}

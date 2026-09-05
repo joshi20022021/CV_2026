@@ -161,8 +161,13 @@ a {
   background: #0b1020;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
+  box-shadow: inset 0 0 0 1px rgba(117, 246, 224, 0.02);
   overflow: hidden;
   position: relative;
+  transition:
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    transform 220ms ease;
 }
 
 .project-carousel-frame {
@@ -172,14 +177,56 @@ a {
   display: block;
   height: 100%;
   padding: 0;
+  position: relative;
   width: 100%;
+}
+
+.project-carousel-frame::before {
+  background:
+    linear-gradient(120deg, transparent 22%, rgba(117, 246, 224, 0.18), transparent 48%),
+    linear-gradient(180deg, transparent 58%, rgba(2, 6, 23, 0.7));
+  content: '';
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transform: translateX(-18%);
+  transition:
+    opacity 220ms ease,
+    transform 420ms ease;
+  z-index: 1;
 }
 
 .project-carousel-image {
   display: block;
   height: 100%;
   object-fit: cover;
+  transform: scale(1.01);
+  transition:
+    filter 220ms ease,
+    transform 320ms ease;
   width: 100%;
+  animation: carousel-image-in 360ms ease both;
+}
+
+.project-carousel:hover {
+  border-color: rgba(117, 246, 224, 0.34);
+  box-shadow:
+    0 18px 48px rgba(0, 0, 0, 0.28),
+    0 0 0 1px rgba(117, 246, 224, 0.08);
+  transform: translateY(-2px);
+}
+
+.project-carousel:hover .project-carousel-frame::before,
+.project-carousel-frame:focus-visible::before {
+  opacity: 1;
+  transform: translateX(18%);
+}
+
+.project-carousel:hover .project-carousel-image,
+.project-carousel-frame:focus-visible .project-carousel-image {
+  filter: saturate(1.08) contrast(1.04);
+  transform: scale(1.045);
 }
 
 .carousel-expand {
@@ -194,10 +241,17 @@ a {
   padding: 7px 10px;
   position: absolute;
   right: 10px;
+  transition:
+    background 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+  z-index: 2;
 }
 
 .carousel-expand:hover {
   background: rgba(0, 209, 178, 0.2);
+  transform: translateY(-1px);
 }
 
 .carousel-button {
@@ -213,12 +267,18 @@ a {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+  transition:
+    background 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
   width: 34px;
+  z-index: 2;
 }
 
 .carousel-button:hover {
   background: rgba(0, 209, 178, 0.22);
   border-color: rgba(117, 246, 224, 0.45);
+  transform: translateY(-50%) scale(1.08);
 }
 
 .carousel-button-left {
@@ -250,11 +310,16 @@ a {
   cursor: pointer;
   height: 8px;
   padding: 0;
+  transition:
+    background 180ms ease,
+    transform 180ms ease,
+    width 180ms ease;
   width: 8px;
 }
 
 .carousel-dot.is-active {
   background: #75f6e0;
+  transform: scale(1.05);
   width: 18px;
 }
 
@@ -263,6 +328,7 @@ a {
   inset: 0;
   position: fixed;
   z-index: 60;
+  animation: lightbox-shell-in 180ms ease both;
 }
 
 .lightbox-backdrop {
@@ -271,6 +337,7 @@ a {
   cursor: zoom-out;
   inset: 0;
   position: absolute;
+  backdrop-filter: blur(10px);
 }
 
 .lightbox-panel {
@@ -285,6 +352,7 @@ a {
   overflow: hidden;
   padding: 16px;
   position: absolute;
+  animation: lightbox-panel-in 260ms ease both;
 }
 
 .lightbox-topbar {
@@ -335,6 +403,16 @@ a {
   position: relative;
 }
 
+.lightbox-stage::before {
+  background:
+    radial-gradient(circle at 18% 18%, rgba(117, 246, 224, 0.12), transparent 34%),
+    radial-gradient(circle at 82% 22%, rgba(59, 130, 246, 0.1), transparent 32%);
+  content: '';
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
 .lightbox-image-scroll {
   align-items: center;
   display: flex;
@@ -354,6 +432,12 @@ a {
   width: 100%;
 }
 
+.lightbox-image {
+  animation: lightbox-image-in 260ms ease both;
+  position: relative;
+  z-index: 1;
+}
+
 .lightbox-arrow {
   height: 38px;
   position: absolute;
@@ -361,6 +445,10 @@ a {
   transform: translateY(-50%);
   width: 38px;
   z-index: 1;
+  transition:
+    background 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
 }
 
 .lightbox-arrow-left {
@@ -381,6 +469,10 @@ a {
   border-color: rgba(117, 246, 224, 0.45);
 }
 
+.lightbox-arrow:hover {
+  transform: translateY(-50%) scale(1.08);
+}
+
 .lightbox-thumbs {
   display: flex;
   gap: 10px;
@@ -397,17 +489,29 @@ a {
   height: 60px;
   overflow: hidden;
   padding: 0;
+  transition:
+    border-color 180ms ease,
+    opacity 180ms ease,
+    transform 180ms ease;
+  opacity: 0.72;
 }
 
 .lightbox-thumb.is-active {
   border-color: #75f6e0;
+  opacity: 1;
+  transform: translateY(-2px);
 }
 
 .lightbox-thumb img {
   display: block;
   height: 100%;
   object-fit: cover;
+  transition: transform 220ms ease;
   width: 100%;
+}
+
+.lightbox-thumb:hover img {
+  transform: scale(1.06);
 }
 
 @media (max-width: 640px) {
@@ -597,21 +701,70 @@ a {
 
 .reveal {
   opacity: 0.12;
-  transform: translateY(26px) scale(0.985);
+  transform: translateY(34px) scale(0.975);
+  transform-origin: center top;
   transition:
-    opacity 520ms ease,
-    transform 520ms ease,
-    filter 520ms ease;
+    opacity 620ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 620ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    filter 620ms ease;
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform, filter;
 }
 
 .reveal:not(.is-visible) {
-  filter: blur(2px);
+  filter: blur(8px);
 }
 
 .reveal.is-visible {
   filter: blur(0);
   opacity: 1;
   transform: translateY(0) scale(1);
+}
+
+@keyframes carousel-image-in {
+  from {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1.01);
+  }
+}
+
+@keyframes lightbox-shell-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes lightbox-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes lightbox-image-in {
+  from {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .project-preview {
@@ -704,10 +857,26 @@ a {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .carousel-dot,
+  .carousel-button,
+  .carousel-expand,
+  .lightbox,
+  .lightbox-panel,
+  .lightbox-image,
+  .lightbox-thumb,
+  .lightbox-thumb img,
+  .project-carousel,
+  .project-carousel-frame::before,
+  .project-carousel-image,
   .reveal,
   .primary-button,
   .secondary-button,
   .icon-button {
+    animation: none;
     transition: none;
+  }
+
+  .reveal {
+    transform: none;
   }
 }
